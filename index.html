@@ -15,7 +15,7 @@
     console.log("Attempting Connection...");
 
     socket.onopen = () => {
-      console.log("Successfully Connected.");
+      console.log("Successfully Connected");
       socket.send('{"host":"http://localhost:9090/","method":"GET","proxy":"","interval": 30 }')
     };
 
