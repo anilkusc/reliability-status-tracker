@@ -8,3 +8,7 @@ type Source struct {
 	Proxy    string `json:"proxy"`
 	LastCode int    `json:"lastCode"`
 }
+type User struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 	"time"
@@ -53,7 +52,7 @@ func Check(source Source) {
 
 		response, err := client.Do(request)
 		if err != nil {
-			fmt.Println("Cannot reach address: " + source.Host + " with proxy: " + source.Proxy)
+			//fmt.Println("Cannot reach address: " + source.Host + " with proxy: " + source.Proxy)
 			source.LastCode = 0
 		} else {
 			source.LastCode = response.StatusCode

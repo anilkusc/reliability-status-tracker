@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -34,14 +34,27 @@ export default function SignIn(props) {
     const classes = useStyles();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-  
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        if (name == "admin" && password == "admin"){
-            props.handleSetLoggedIn()
-        }else{
-            alert(`Wrong Username or Password`)
-        }
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: "{ \"username\": \""+ name +"\", \"password\": \""+password+"\" }"
+        };
+//        "proxy": "http://localhost:8080",
+
+        fetch('/login', requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.authenticated === "true") {
+                    props.handleSetLoggedIn()
+                } else {
+                    alert(`Wrong Username or Password`)
+                }
+            });
+
     }
 
     return (

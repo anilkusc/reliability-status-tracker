@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -39,6 +39,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Add() {
     const classes = useStyles();
+    const [host, setHost] = useState("");
+    const [desired, setDesired] = useState("");
+    const [interval, setInterval] = useState("");
+    const [method, setMethod] = useState("");
+    const [proxy, setProxy] = useState("");
+    const [lastCode, setLastCode] = useState("");
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: "{\"host\":\""+ host +"\",\"desired\":"+desired+",\"interval\":"+interval+",\"method\":\""+method+"\",\"proxy\":\""+proxy+"\",\"lastCode\":"+desired+"}",
+        };
+        fetch('/add', requestOptions)
+            .then((response) => response.json())
+            .then((data) => {console.log(data)});
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -47,7 +66,7 @@ export default function Add() {
                 <Typography component="h1" variant="h5">
                     Add new target
         </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -57,6 +76,7 @@ export default function Add() {
                         label="Target Address"
                         type="text"
                         name="target"
+                        onChange={e => setHost(e.target.value)}
                         autoFocus
                     />
                     <TextField
@@ -68,24 +88,27 @@ export default function Add() {
                         label="Proxy"
                         type="proxy"
                         id="proxy"
+                        onChange={e => setProxy(e.target.value)}
                         autoFocus
                     />
-                    <FormControl className={classes.formControl}>
+                    <FormControl className={classes.formControl} onChange={e => setMethod(e.target.value)}>
                         <NativeSelect
                             className={classes.selectEmpty}
-                            value="10"
-                            name="age"
+                            value={method}
+                            name="method"
+                            
                         >
-                            <option value={10}>GET</option>
-                            <option value={20}>POST</option>
+                            <option value={"GET"}>GET</option>
+                            <option value={"POST"}>POST</option>
                         </NativeSelect>
                         <FormHelperText>Method</FormHelperText>
                     </FormControl>
-                    <FormControl className={classes.formControl}>
+                    <FormControl className={classes.formControl} onChange={e => setDesired(e.target.value)}>
                         <NativeSelect
                             className={classes.selectEmpty}
-                            value="200"
-                            name="Desired Status Code"
+                            value={desired}
+                            name="desired"
+                            
                         >
                             <option value={100}>100</option>
                             <option value={200}>200</option>
@@ -95,11 +118,12 @@ export default function Add() {
                         </NativeSelect>
                         <FormHelperText>Desired Status Code</FormHelperText>
                     </FormControl>
-                    <FormControl className={classes.formControl}>
+                    <FormControl className={classes.formControl}onChange={e => setInterval(e.target.value)} >
                         <NativeSelect
                             className={classes.selectEmpty}
-                            value="200"
-                            name="Checking time interval"
+                            value={interval}
+                            name="interval"
+                            
                         >
                             <option value={10}>10s</option>
                             <option value={30}>30s</option>
