@@ -10,13 +10,13 @@ import (
 func Select() []Source {
 	database, err := sql.Open("sqlite3", "./db/database.db")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Open database error")
 	}
-	//defer database.Close()
+	defer database.Close()
 	query := "SELECT * FROM status;"
 	rows, err := database.Query(query)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Query error")
 	}
 
 	defer rows.Close()
@@ -32,7 +32,7 @@ func Select() []Source {
 func Insert(source Source) string {
 	database, err := sql.Open("sqlite3", "./db/database.db")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Open database error")
 		return "failed to open sql"
 	}
 	defer database.Close()
@@ -44,7 +44,7 @@ func Insert(source Source) string {
 func Delete(source Source) string {
 	database, err := sql.Open("sqlite3", "./db/database.db")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Open datavase error")
 		return "failed to open sql"
 	}
 	defer database.Close()
@@ -55,7 +55,7 @@ func Delete(source Source) string {
 func Update(source Source) string {
 	database, err := sql.Open("sqlite3", "./db/database.db")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Open database error")
 		return "failed to open sql"
 	}
 	defer database.Close()

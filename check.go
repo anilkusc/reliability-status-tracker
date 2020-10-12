@@ -51,9 +51,14 @@ func Check(source Source) {
 		}
 		request, _ := http.NewRequest(source.Method, source.Host, nil)
 
-		response, _ := client.Do(request)
+		response, err := client.Do(request)
+		if err != nil {
+			fmt.Println("Cannot reach address: " + source.Host + " with proxy: " + source.Proxy)
+			source.LastCode = 0
+		} else {
+			source.LastCode = response.StatusCode
+		}
 
-		source.LastCode = response.StatusCode
 		Update(source)
 		fmt.Println(source)
 		time.Sleep(time.Duration(source.Interval) * time.Second)

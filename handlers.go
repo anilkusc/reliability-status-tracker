@@ -16,7 +16,7 @@ func WsStatus(w http.ResponseWriter, r *http.Request) {
 
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println(err)
+		log.Println("create web socket error")
 	}
 	SocketStatus(ws)
 
