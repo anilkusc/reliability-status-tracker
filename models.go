@@ -9,4 +9,5 @@ type Source struct {
 	Interval int    `json:"interval"`
 	Method   string `json:"method"`
 	Proxy    string `json:"proxy"`
+	LastCode int    `json:"lastCode"`
 }
