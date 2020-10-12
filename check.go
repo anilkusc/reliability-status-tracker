@@ -60,7 +60,6 @@ func Check(source Source) {
 		}
 
 		Update(source)
-		fmt.Println(source)
 		time.Sleep(time.Duration(source.Interval) * time.Second)
 
 	}

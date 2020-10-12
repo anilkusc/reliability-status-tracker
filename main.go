@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 )
 
@@ -14,7 +16,14 @@ var restart = false
 
 func main() {
 	go Control()
-	http.HandleFunc("/status", WsStatus)
-	http.ListenAndServe(":8080", nil)
+	r := mux.NewRouter()
 
+	r.HandleFunc("/status", WsStatus)
+	r.HandleFunc("/add", Add).Methods("POST")
+	fmt.Println("Serving on:8080")
+	http.ListenAndServe(":8080", r)
+	/*http.HandleFunc("/status", WsStatus)
+	http.HandleFunc("/add", Add)
+	http.ListenAndServe(":8080", nil)
+	*/
 }
