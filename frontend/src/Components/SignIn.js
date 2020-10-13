@@ -44,7 +44,7 @@ export default function SignIn(props) {
         };
 //        "proxy": "http://localhost:8080",
 
-        fetch('/login', requestOptions)
+        fetch('/login/', requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 if (data.authenticated === "true") {
