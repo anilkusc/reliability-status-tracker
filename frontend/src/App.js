@@ -35,6 +35,9 @@ class Routes extends React.Component {
             <Route exact path="/" >
               <Dashboard content="orders" />
             </Route>
+            <Route exact path="/redirect" >
+            <Redirect  from="/redirect"  to="/"  exact  />
+            </Route>
             <Route exact path="/add" >
               <Dashboard content="add" />
             </Route>

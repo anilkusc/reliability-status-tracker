@@ -8,7 +8,10 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { withRouter } from 'react-router-dom';
+import {
+    Redirect
+  } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -39,12 +42,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Add() {
     const classes = useStyles();
-    const [host, setHost] = useState("");
-    const [desired, setDesired] = useState("");
-    const [interval, setInterval] = useState("");
-    const [method, setMethod] = useState("");
+    const [host, setHost] = useState("http://www.google.com");
+    const [desired, setDesired] = useState(200);
+    const [redirect, setRedirect] = useState(false);
+    const [interval, setInterval] = useState(30);
+    const [method, setMethod] = useState("GET");
     const [proxy, setProxy] = useState("");
-    const [lastCode, setLastCode] = useState("");
+    const [lastCode, setLastCode] = useState(200);
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
@@ -52,15 +56,24 @@ export default function Add() {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: "{\"host\":\""+ host +"\",\"desired\":"+desired+",\"interval\":"+interval+",\"method\":\""+method+"\",\"proxy\":\""+proxy+"\",\"lastCode\":"+desired+"}",
+            body: "{\"host\":\"" + host + "\",\"desired\":" + desired + ",\"interval\":" + interval + ",\"method\":\"" + method + "\",\"proxy\":\"" + proxy + "\",\"lastCode\":0 }",
         };
         fetch('/add', requestOptions)
             .then((response) => response.json())
-            .then((data) => {console.log(data)});
+            .then((data) => { console.log(data) });
+            setRedirect(true)
+        }
+
+    const renderRedirect = () => {
+        if (redirect) {
+            return <Redirect to='/redirect' />
+          }
     }
+
 
     return (
         <Container component="main" maxWidth="xs">
+            {renderRedirect()}
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
@@ -96,7 +109,7 @@ export default function Add() {
                             className={classes.selectEmpty}
                             value={method}
                             name="method"
-                            
+
                         >
                             <option value={"GET"}>GET</option>
                             <option value={"POST"}>POST</option>
@@ -108,7 +121,7 @@ export default function Add() {
                             className={classes.selectEmpty}
                             value={desired}
                             name="desired"
-                            
+
                         >
                             <option value={100}>100</option>
                             <option value={200}>200</option>
@@ -118,12 +131,12 @@ export default function Add() {
                         </NativeSelect>
                         <FormHelperText>Desired Status Code</FormHelperText>
                     </FormControl>
-                    <FormControl className={classes.formControl}onChange={e => setInterval(e.target.value)} >
+                    <FormControl className={classes.formControl} onChange={e => setInterval(e.target.value)} >
                         <NativeSelect
                             className={classes.selectEmpty}
                             value={interval}
                             name="interval"
-                            
+
                         >
                             <option value={10}>10s</option>
                             <option value={30}>30s</option>
@@ -145,7 +158,7 @@ export default function Add() {
                         className={classes.submit}
                     >
                         Add
-          </Button>
+                     </Button>
 
                 </form>
             </div>
