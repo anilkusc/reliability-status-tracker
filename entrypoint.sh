@@ -1,3 +1,3 @@
 #!/bin/bash
 ./app &
-serve -s /bin/build -l 3000
+serve -s ./build -l 3000
