@@ -21,7 +21,7 @@ export default class Orders extends React.Component {
 
     this.Availablity = this.Availablity.bind(this);
   }
-  ws = new WebSocket('/backend/status/')
+  ws = new WebSocket('http://localhost/backend/status/')
   componentDidMount() {
 
     this.ws.onopen = () => {
