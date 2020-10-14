@@ -42,7 +42,7 @@ export default function SignIn(props) {
         };
     
         axios.post(
-            'http://localhost:8080/login/',
+            '/login/',
             {
                 username: name,
                 password: password,
