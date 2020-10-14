@@ -15,9 +15,11 @@ COPY frontend .
 RUN npm install
 RUN npm run build && cp -fr build /bin/
 
-FROM node:12.18.4-stretch-slim
+#FROM node:12.18.4-stretch-slim
+FROM nginx
 WORKDIR /app
-RUN npm install -g serve && mkdir build && mkdir db
+#RUN npm install -g serve && mkdir build && mkdir db
+RUN mkdir build && mkdir db
 COPY --from=BUILD-BACKEND /bin/app .
 COPY --from=BUILD-BACKEND /db/database.db ./db/
 COPY --from=BUILD-FRONTEND /bin/build ./build/
