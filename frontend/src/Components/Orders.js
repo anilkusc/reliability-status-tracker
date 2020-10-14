@@ -20,7 +20,7 @@ export default class Orders extends React.Component {
 
     this.Availablity = this.Availablity.bind(this);
   }
-  ws = new WebSocket('ws://localhost:8080/status')
+  ws = new WebSocket('/backend/status/')
   componentDidMount() {
 
     this.ws.onopen = () => {
@@ -99,15 +99,26 @@ class Delete extends React.Component {
     this.DeleteRow = this.DeleteRow.bind(this);
   }
   DeleteRow() {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: "{\"host\":\"" + this.props.row.host + "\",\"desired\":" + this.props.row.desired + ",\"interval\":" + this.props.row.interval + ",\"method\":\"" + this.props.row.method + "\",\"proxy\":\"" + this.props.row.proxy + "\",\"lastCode\":" + this.props.row.desired + "}",
-      //body: this.props.row,
+
+    const headers = {
+      'Content-Type': 'application/json'
     };
-    fetch('/delete', requestOptions)
-      .then((response) => response.json())
-      .then((data) => { console.log(data) });
+
+    axios.post(
+      '/backend/delete/',
+      {
+        host: this.props.row.host,
+        desired: this.props.row.desired,
+        interval:  this.props.row.interval,
+        method: this.props.row.method,
+        proxy: this.props.row.proxy,
+        lastCode: this.props.row.desired,
+      },
+      { headers }
+    )
+      .then(response => { console.log(response.data) })
+      .catch(error => { console.log("Error ========>", error); }
+      )
   }
   render() {
     return (

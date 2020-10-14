@@ -64,7 +64,7 @@ func Add(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteRecord(w http.ResponseWriter, r *http.Request) {
-
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	var source Source
 	err := json.NewDecoder(r.Body).Decode(&source)
 	if err != nil {

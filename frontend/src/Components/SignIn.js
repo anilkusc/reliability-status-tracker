@@ -48,15 +48,7 @@ export default function SignIn(props) {
                 password: password,
             },
             {headers}
-            )/*
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.authenticated === "true") {
-                    props.handleSetLoggedIn()
-                } else {
-                    alert(`Wrong Username or Password`)
-                }
-            })*/
+            )
             .then(response => {
                 console.log(response.data)
                 if (response.data.authenticated === "true") {
