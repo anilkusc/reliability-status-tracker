@@ -42,7 +42,7 @@ export default function SignIn(props) {
         };
     
         axios.post(
-            '/login/',
+            '/backend/login/',
             {
                 username: name,
                 password: password,

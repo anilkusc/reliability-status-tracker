@@ -108,3 +108,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	//curl -X POST http://localhost:8080/login --data '{"username":"admin","password":"admin"}'
 
 }
+func Hello(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	io.WriteString(w, `hello`)
+	return
+
+}
