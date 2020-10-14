@@ -24,5 +24,6 @@ COPY --from=BUILD-BACKEND /bin/app .
 COPY --from=BUILD-BACKEND /db/database.db ./db/
 COPY --from=BUILD-FRONTEND /bin/build ./build/
 COPY entrypoint.sh .
+COPY default.conf /etc/nginx/conf.d/default.conf
 RUN chmod 777 entrypoint.sh
 ENTRYPOINT ./entrypoint.sh
