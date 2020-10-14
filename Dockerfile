@@ -11,14 +11,14 @@ RUN chmod -R 777 db.sh && ./db.sh
 
 FROM node:12.18.4-stretch-slim as BUILD-FRONTEND
 WORKDIR /src
-COPY frontend .
+COPY frontend/package.json .
 RUN npm install
+COPY frontend .
 RUN npm run build && cp -fr build /bin/
 
-#FROM node:12.18.4-stretch-slim
+
 FROM nginx
 WORKDIR /app
-#RUN npm install -g serve && mkdir build && mkdir db
 RUN mkdir build && mkdir db
 COPY --from=BUILD-BACKEND /bin/app .
 COPY --from=BUILD-BACKEND /db/database.db ./db/
