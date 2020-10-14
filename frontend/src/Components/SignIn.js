@@ -7,7 +7,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -37,14 +37,18 @@ export default function SignIn(props) {
     const handleSubmit = (evt) => {
         evt.preventDefault();
 
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: "{ \"username\": \""+ name +"\", \"password\": \""+password+"\" }"
+        const headers = {
+            'Content-Type': 'text/plain'
         };
-//        "proxy": "http://localhost:8080",
-
-        fetch('/login/', requestOptions)
+    
+        axios.post(
+            'http://localhost:8080/login/',
+            {
+                username: name,
+                password: password,
+            },
+            {headers}
+            )/*
             .then((response) => response.json())
             .then((data) => {
                 if (data.authenticated === "true") {
@@ -52,7 +56,18 @@ export default function SignIn(props) {
                 } else {
                     alert(`Wrong Username or Password`)
                 }
-            });
+            })*/
+            .then(response => {
+                if (response.data.authenticated === "true") {
+                    props.handleSetLoggedIn()
+                } else {
+                    alert(`Wrong Username or Password`)
+                }
+            })
+            .catch(error => {
+                console.log("Error ========>", error);
+            }
+        )
 
     }
 
