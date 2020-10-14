@@ -58,6 +58,7 @@ export default function SignIn(props) {
                 }
             })*/
             .then(response => {
+                console.log(response.data)
                 if (response.data.authenticated === "true") {
                     props.handleSetLoggedIn()
                 } else {
