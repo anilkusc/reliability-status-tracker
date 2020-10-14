@@ -18,7 +18,7 @@ func main() {
 	go Control()
 	r := mux.NewRouter()
 
-	r.HandleFunc("/status/", WsStatus)
+	r.HandleFunc("/status", WsStatus)
 	r.HandleFunc("/add/", Add).Methods("POST")
 	r.HandleFunc("/delete/", DeleteRecord).Methods("POST")
 	r.HandleFunc("/login/", Login).Methods("POST")
