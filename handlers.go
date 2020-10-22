@@ -79,7 +79,6 @@ func DeleteRecord(w http.ResponseWriter, r *http.Request) {
 }
 func Login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	fmt.Println("Login")
 	var user User
 	var username string
 	var password string
