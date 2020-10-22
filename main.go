@@ -15,7 +15,7 @@ var upgrader = websocket.Upgrader{
 var restart = false
 
 func main() {
-	go Control()
+	//go Control()
 	r := mux.NewRouter()
 
 	r.HandleFunc("/status", WsStatus)
