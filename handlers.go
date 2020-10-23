@@ -88,16 +88,23 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, `{"authenticated":"false"}`)
 		return
 	}
+	fmt.Println("0")
 	if os.Getenv("USERNAME") == "" {
+		fmt.Println("1")
 		username = "admin"
 	} else {
+		fmt.Println("2")
 		username = os.Getenv("USERNAME")
 	}
 	if os.Getenv("PASSWORD") == "" {
+		fmt.Println("3")
 		password = "admin"
 	} else {
+		fmt.Println("4")
 		password = os.Getenv("PASSWORD")
 	}
+	fmt.Println(username)
+	fmt.Println(password)
 	if username == user.Username && password == user.Password {
 		io.WriteString(w, `{"authenticated":"true"}`)
 		return
