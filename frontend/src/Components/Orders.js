@@ -27,7 +27,7 @@ export default class Orders extends React.Component {
    // let { host } = window.location; // nb: window location contains the port, so host will be localhost:3000 in dev
     //this.ws = new WebSocket(`${protocolPrefix}//${host}/ws/status`);
     //this.ws = new WebSocket('ws://localhost/ws/status');
-    this.ws = new WebSocket('ws://ws/status');
+    this.ws = new WebSocket('ws://localhost:80/ws/status');
 
     this.ws.onopen = () => {
       // on connecting, do nothing but log it to the console
