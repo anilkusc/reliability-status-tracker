@@ -25,8 +25,9 @@ func main() {
 	r.HandleFunc("/", Hello).Methods("POST")
 	fmt.Println("Serving on:8080")
 	http.ListenAndServe(":8080", r)
-	/*http.HandleFunc("/status", WsStatus)
-	http.HandleFunc("/add", Add)
-	http.ListenAndServe(":8080", nil)
+	/*
+		http.HandleFunc("/status", WsStatus)
+		http.HandleFunc("/add", Add)
+		http.ListenAndServe(":8080", nil)
 	*/
 }
