@@ -21,13 +21,10 @@ export default class Orders extends React.Component {
 
     this.Availablity = this.Availablity.bind(this);
   }
-  //ws = new WebSocket('ws://localhost/status')
   componentDidMount() {
     const protocolPrefix = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     let { host } = window.location; // nb: window location contains the port, so host will be localhost:3000 in dev
     this.ws = new WebSocket(`${protocolPrefix}//${host}/ws/status`);
-    //this.ws = new WebSocket('ws://localhost/ws/status');
-    //this.ws = new WebSocket('ws://localhost:80/ws/status');
 
     this.ws.onopen = () => {
       // on connecting, do nothing but log it to the console
@@ -37,7 +34,10 @@ export default class Orders extends React.Component {
 
     this.ws.onmessage = evt => {
       // listen to data sent from the websocket server
-      const message = JSON.parse(evt.data)
+      const message = JSON.parse(evt.data);
+      if (message == null){
+        message = [{"host":"","desired":null,"interval":null,"method":"","proxy":"","lastCode":null}]
+      }
       this.setState({ records: message });
       console.log(evt.data)
     }
