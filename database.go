@@ -45,7 +45,9 @@ func Insert(source Source) string {
 		return `{"status":"FAIL"}`
 	}
 	statement.Exec(source.Host, source.Desired, source.Interval, source.Method, source.Proxy, source.LastCode)
-
+	restart = true
+	time.Sleep(time.Second)
+	restart = false
 	return `{"status":"OK"}`
 }
 
@@ -62,7 +64,9 @@ func Delete(source Source) string {
 		return `{"status":"FAIL"}`
 	}
 	statement.Exec(source.Host, source.Desired, source.Interval, source.Method, source.Proxy)
-
+	restart = true
+	time.Sleep(time.Second)
+	restart = false
 	return `{"status":"OK"}`
 }
 func Update(source Source) string {
