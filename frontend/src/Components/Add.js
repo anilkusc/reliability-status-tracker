@@ -58,7 +58,7 @@ export default function Add() {
             headers: { 'Content-Type': 'application/json' },
             body: "{\"host\":\"" + host + "\",\"desired\":" + desired + ",\"interval\":" + interval + ",\"method\":\"" + method + "\",\"proxy\":\"" + proxy + "\",\"lastCode\":0 }",
         };
-        fetch('/add', requestOptions)
+        fetch('/backend/add/', requestOptions)
             .then((response) => response.json())
             .then((data) => { console.log(data) });
             setRedirect(true)
