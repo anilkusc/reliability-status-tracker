@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 )
 
@@ -12,6 +13,9 @@ func ControlRestart() bool {
 		if restart == false {
 			continue
 		} else {
+			if os.Getenv("DEBUG") == "true" {
+				fmt.Println("1")
+			}
 			return true
 		}
 	}

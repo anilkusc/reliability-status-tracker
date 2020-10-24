@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -71,6 +72,9 @@ func Update(source Source) string {
 		return `{"status":"FAIL"}`
 	}
 	defer database.Close()
+	if os.Getenv("DEBUG") == "true" {
+		fmt.Println("5")
+	}
 	statement, err := database.Prepare("UPDATE status SET lastCode = ? WHERE host=? AND desired=? AND interval=? AND method=?  AND proxy=? ;")
 	if err != nil {
 		fmt.Println("prepare statement error")
