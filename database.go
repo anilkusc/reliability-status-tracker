@@ -73,7 +73,7 @@ func Update(source Source) string {
 	}
 	defer database.Close()
 	if os.Getenv("DEBUG") == "true" {
-		fmt.Println("5")
+		fmt.Println(source)
 	}
 	statement, err := database.Prepare("UPDATE status SET lastCode = ? WHERE host=? AND desired=? AND interval=? AND method=?  AND proxy=? ;")
 	if err != nil {
