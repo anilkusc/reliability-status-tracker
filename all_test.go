@@ -9,12 +9,8 @@ import (
 )
 
 func TestLogin(t *testing.T) {
-	/*
-		var user User
-		user.Username = "Anil"
-		user.Password = "Admin"
-	*/
-	user := User{Username: "asd", Password: "asd"}
+
+	user := User{Username: "Anıl", Password: "admin"}
 	data, _ := json.Marshal(user)
 	req, err := http.NewRequest("POST", "/login/", bytes.NewBuffer(data))
 	if err != nil {
@@ -25,15 +21,12 @@ func TestLogin(t *testing.T) {
 	handler := http.HandlerFunc(Login)
 
 	handler.ServeHTTP(rr, req)
-
 	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
 	}
-	expected := `{"authenticated": "false"}`
+	expected := `{"authenticated":"false"}`
 	if rr.Body.String() != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v",
-			rr.Body.String(), expected)
+		t.Errorf("handler returned unexpected body: got %v want %v", rr.Body.String(), expected)
 	}
 }
 
