@@ -18,7 +18,6 @@ var restart = false
 var dtbs *sql.DB
 
 func main() {
-	dtbs = NewDbConn()
 	go Control()
 	r := mux.NewRouter()
 
