@@ -5,6 +5,7 @@ COPY go.sum go.mod ./
 RUN go mod download
 COPY . .
 RUN rm -fr ./frontend
+RUN rm test.go
 RUN go build -a -ldflags "-linkmode external -extldflags '-static' -s -w" -o /bin/app .
 RUN chmod -R 777 db.sh && ./db.sh
 #RUN CGO_ENABLED=0 go build -o /bin/backend .
