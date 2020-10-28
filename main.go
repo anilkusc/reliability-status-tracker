@@ -1,11 +1,13 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 var upgrader = websocket.Upgrader{
@@ -13,7 +15,7 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 var restart = false
-var dtbs = NewDbConn()
+var dtbs *sql.DB
 
 func main() {
 	dtbs = NewDbConn()
