@@ -23,7 +23,7 @@ func ControlRestart() bool {
 
 func Control() {
 	for {
-		sources := Select()
+		sources := Select(dtbs)
 		for _, source := range sources {
 			go Check(source)
 		}
@@ -59,16 +59,16 @@ func Check(source Source) {
 		if err != nil {
 			fmt.Println("Cannot do request: " + source.Host + " with proxy: " + source.Proxy)
 			source.LastCode = 0
-			Update(source)
+			Update(dtbs, source)
 		}
 		response, err := client.Do(request)
 		if err != nil {
 			fmt.Println("Cannot reach address: " + source.Host + " with proxy: " + source.Proxy)
 			source.LastCode = 0
-			Update(source)
+			Update(dtbs, source)
 		} else {
 			source.LastCode = response.StatusCode
-			Update(source)
+			Update(dtbs, source)
 		}
 
 		time.Sleep(time.Duration(source.Interval) * time.Second)

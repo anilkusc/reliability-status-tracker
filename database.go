@@ -9,12 +9,16 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func Select() []Source {
+func NewDbConn() *sql.DB {
 	database, err := sql.Open("sqlite3", "./db/database.db")
 	if err != nil {
 		fmt.Println("Open database error")
 	}
 	defer database.Close()
+	return database
+}
+
+func Select(database *sql.DB) []Source {
 	query := "SELECT * FROM status;"
 	rows, err := database.Query(query)
 	if err != nil {
@@ -32,15 +36,10 @@ func Select() []Source {
 	return sources
 }
 
-func Insert(source Source) string {
-	database, err := sql.Open("sqlite3", "./db/database.db")
-	if err != nil {
-		fmt.Println("Open database error")
-		return `{"status":"FAIL"}`
-	}
-	defer database.Close()
+func Insert(database *sql.DB, source Source) string {
 	statement, err := database.Prepare("INSERT INTO status (host,desired,interval,method,proxy,lastCode) VALUES (?,?,?,?,?,?)")
 	if err != nil {
+		fmt.Println(err)
 		fmt.Println("prepare statement error")
 		return `{"status":"FAIL"}`
 	}
@@ -51,13 +50,8 @@ func Insert(source Source) string {
 	return `{"status":"OK"}`
 }
 
-func Delete(source Source) string {
-	database, err := sql.Open("sqlite3", "./db/database.db")
-	if err != nil {
-		fmt.Println("Open database error")
-		return `{"status":"FAIL"}`
-	}
-	defer database.Close()
+func Delete(database *sql.DB, source Source) string {
+
 	statement, err := database.Prepare("DELETE FROM status where host=? AND desired=? AND interval=? AND method=?  AND proxy=? ;")
 	if err != nil {
 		fmt.Println("prepare statement error")
@@ -69,13 +63,7 @@ func Delete(source Source) string {
 	restart = false
 	return `{"status":"OK"}`
 }
-func Update(source Source) string {
-	database, err := sql.Open("sqlite3", "./db/database.db")
-	if err != nil {
-		fmt.Println("Open database error")
-		return `{"status":"FAIL"}`
-	}
-	defer database.Close()
+func Update(database *sql.DB, source Source) string {
 	if os.Getenv("DEBUG") == "true" {
 		fmt.Println(source)
 	}

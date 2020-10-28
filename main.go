@@ -13,6 +13,7 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 var restart = false
+var dtbs = NewDbConn()
 
 func main() {
 	go Control()
@@ -22,12 +23,6 @@ func main() {
 	r.HandleFunc("/add/", Add).Methods("POST")
 	r.HandleFunc("/delete/", DeleteRecord).Methods("POST")
 	r.HandleFunc("/login/", Login).Methods("POST")
-	r.HandleFunc("/", Hello).Methods("POST")
 	fmt.Println("Serving on:8080")
 	http.ListenAndServe(":8080", r)
-	/*
-		http.HandleFunc("/status", WsStatus)
-		http.HandleFunc("/add", Add)
-		http.ListenAndServe(":8080", nil)
-	*/
 }

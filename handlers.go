@@ -30,7 +30,7 @@ func SocketStatus(conn *websocket.Conn) {
 	for {
 		messageType, _, _ := conn.ReadMessage()
 		for {
-			sources := Select()
+			sources := Select(dtbs)
 			jsonData, err := json.Marshal(sources)
 			if err != nil {
 				log.Println("error while marshall json")
@@ -57,8 +57,8 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, `{"status":"FAIL"}`)
 		return
 	}
-	//curl -X POST http://localhost:8080/add --data '{"host":"http://info.cern.ch/","desired":200,"interval":45,"method":"GET","proxy":"","lastCode":200}'
-	io.WriteString(w, Insert(source))
+
+	io.WriteString(w, Insert(dtbs, source))
 	return
 
 }
@@ -72,8 +72,7 @@ func DeleteRecord(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, `{"status":"FAIL"}`)
 		return
 	}
-	//curl -X POST http://localhost:8080/add --data '{"host":"http://info.cern.ch/","desired":200,"interval":45,"method":"GET","proxy":"","lastCode":200}'
-	io.WriteString(w, Delete(source))
+	io.WriteString(w, Delete(dtbs, source))
 	return
 
 }
@@ -105,12 +104,5 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, `{"authenticated":"false"}`)
 		return
 	}
-	//curl -X POST http://localhost:8080/login --data '{"username":"admin","password":"admin"}'
-
-}
-func Hello(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	io.WriteString(w, `hello`)
-	return
 
 }
