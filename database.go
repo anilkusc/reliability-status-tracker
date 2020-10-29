@@ -14,7 +14,7 @@ func NewDbConn() *sql.DB {
 	if err != nil {
 		fmt.Println("Open database error")
 	}
-	defer database.Close()
+	//defer database.Close()
 	return database
 }
 

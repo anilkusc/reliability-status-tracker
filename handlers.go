@@ -30,12 +30,8 @@ func SocketStatus(conn *websocket.Conn) {
 	for {
 		messageType, _, _ := conn.ReadMessage()
 		for {
-			var sources []Source
-			if os.Getenv("TEST") == "true" {
-				sources = Select(dtbs)
-			} else {
-				sources = Select(NewDbConn())
-			}
+
+			sources := Select(dtbs)
 
 			jsonData, err := json.Marshal(sources)
 			if err != nil {
@@ -63,11 +59,7 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, `{"status":"FAIL"}`)
 		return
 	}
-	if os.Getenv("TEST") == "true" {
-		io.WriteString(w, Insert(dtbs, source))
-	} else {
-		io.WriteString(w, Insert(NewDbConn(), source))
-	}
+	io.WriteString(w, Insert(dtbs, source))
 
 	return
 
@@ -82,11 +74,7 @@ func DeleteRecord(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, `{"status":"FAIL"}`)
 		return
 	}
-	if os.Getenv("TEST") == "true" {
-		io.WriteString(w, Delete(dtbs, source))
-	} else {
-		io.WriteString(w, Delete(NewDbConn(), source))
-	}
+	io.WriteString(w, Delete(dtbs, source))
 
 	return
 

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"net/http"
 
@@ -15,7 +14,7 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 var restart = false
-var dtbs *sql.DB
+var dtbs = NewDbConn()
 
 func main() {
 	go Control()

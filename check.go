@@ -23,12 +23,8 @@ func ControlRestart() bool {
 
 func Control() {
 	for {
-		var sources []Source
-		if os.Getenv("TEST") == "true" {
-			sources = Select(dtbs)
-		} else {
-			sources = Select(NewDbConn())
-		}
+
+		sources := Select(dtbs)
 
 		for _, source := range sources {
 			go Check(source)
@@ -61,33 +57,25 @@ func Check(source Source) {
 				Timeout:   10 * time.Second,
 			}
 		}
+
 		request, err := http.NewRequest(source.Method, source.Host, nil)
+
 		if err != nil {
 			fmt.Println("Cannot do request: " + source.Host + " with proxy: " + source.Proxy)
 			source.LastCode = 0
-			if os.Getenv("TEST") == "true" {
-				Update(dtbs, source)
-			} else {
-				Update(NewDbConn(), source)
-			}
-
+			Update(dtbs, source)
 		}
+
 		response, err := client.Do(request)
 		if err != nil {
 			fmt.Println("Cannot reach address: " + source.Host + " with proxy: " + source.Proxy)
 			source.LastCode = 0
-			if os.Getenv("TEST") == "true" {
-				Update(dtbs, source)
-			} else {
-				Update(NewDbConn(), source)
-			}
+			Update(dtbs, source)
+
 		} else {
 			source.LastCode = response.StatusCode
-			if os.Getenv("TEST") == "true" {
-				Update(dtbs, source)
-			} else {
-				Update(NewDbConn(), source)
-			}
+			Update(dtbs, source)
+
 		}
 
 		time.Sleep(time.Duration(source.Interval) * time.Second)
