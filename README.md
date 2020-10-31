@@ -5,4 +5,4 @@ You can add proxy,method,desired status code so you can track external or intern
 docker build -t anilkuscu95/reliability-status-tracker .<br>
 docker run -dit -p 80:80 anilkuscu95/reliability-status-tracker<br>
 
-![alt text](https://github.com/anilkusc/reliability-status-tracker/blob/main/images/pages.gif "Pages")
+![alt text](https://github.com/anilkusc/reliability-status-tracker/blob/master/images/pages.gif "Pages")
